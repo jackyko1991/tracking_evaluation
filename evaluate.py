@@ -10,10 +10,9 @@ from tra import get_tra
 import argparse
 import csv
 
-
 def parse_arguments():
 
-    print 'parsing arguments...'
+    print('parsing arguments...')
 
     parser = argparse.ArgumentParser()
 
@@ -47,7 +46,7 @@ def evaluate_files(args):
     res_file = args.res_file
     gt_file = args.gt_file
 
-    print 'reading gt volume...'
+    print('reading gt volume...')
 
     with h5py.File(gt_file, 'r') as f:
         mask = np.array(f['volumes/labels/ignore'])
@@ -55,34 +54,34 @@ def evaluate_files(args):
         gt_tracks = np.array(f['volumes/labels/tracks'])
         gt_track_graph = np.array(f['graphs/track_graph'])
     
-    print 'reading volumes...'
+    print('reading volumes...')
     
     with h5py.File(res_file, 'r+') as f:
         
         if args.recreate_track: 
             
             if 'volumes/labels/tracks' in f:
-                print 'delete tracks'
+                print('delete tracks')
                 del f['volumes/labels/tracks']
             if 'graphs/track_graph' in f:
-                print 'delete graph'
+                print('delete graph')
                 del f['graphs/track_graph']
             if 'volumes/labels/unique_ids' in f:
-                print 'delete unique_ids'
+                print('delete unique_ids')
                 del f['volumes/labels/unique_ids']
         
         if 'volumes/labels/vertex_errors' in f:
-            print 'delete vertex errors'
+            print('delete vertex errors')
             del f['volumes/labels/vertex_errors']
         if 'volumes/labels/edge_errors' in f:
-            print 'delete edge errors'
+            print('delete edge errors')
             del f['volumes/labels/edge_errors']
 
         track_graph_present = 'graphs/track_graph' in f
 
         if not track_graph_present:
 
-            print 'create track graph'
+            print('create track graph')
             
             cells = np.array(f['volumes/labels/cells'])
             lineages = np.array(f['volumes/labels/lineages'])
@@ -182,13 +181,13 @@ def evaluate_files(args):
         w.writerow(output_fields)
         w.writerow([report[k] for k in output_fields])
 
-    print("Saved report %s in %s"%(report, report_file))
+    print(("Saved report %s in %s"%(report, report_file)))
 
 if __name__ == "__main__":
 
     args = parse_arguments()
-    print 'evaluating with following parameters:'
+    print('evaluating with following parameters:')
     for a in args.__dict__:
-        print(str(a) + ': ' + str(args.__dict__[a]))
+        print((str(a) + ': ' + str(args.__dict__[a])))
 
     evaluate_files(args)

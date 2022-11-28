@@ -21,8 +21,8 @@ def relabel(tracks, track_graph):
         labels.remove(0)
 
     if len(labels) >= 2**16:
-        print("Track graph contains %d distinct labels, can not be expressed "
-              "in int16. Skipping evaluation."%len(labels))
+        print(("Track graph contains %d distinct labels, can not be expressed "
+              "in int16. Skipping evaluation."%len(labels)))
         raise TooManyTracksError()
 
     old_values = np.array(labels)
@@ -63,12 +63,12 @@ def evaluate_segtra(res_tracks, res_track_graph, gt_tracks, gt_track_graph):
     res_tracks = res_tracks.astype(np.uint16)
     gt_tracks = gt_tracks.astype(np.uint16)
 
-    print(res_tracks.dtype, gt_tracks.dtype)
+    print((res_tracks.dtype, gt_tracks.dtype))
 
     # create a temp dir
     dataset_dir = tempfile.mkdtemp()
 	
-    print("Using temp dir %s"%dataset_dir)
+    print(("Using temp dir %s"%dataset_dir))
 
     try:
 
@@ -120,14 +120,14 @@ def evaluate_segtra(res_tracks, res_track_graph, gt_tracks, gt_track_graph):
 
         except CalledProcessError as exc:
 
-            print("Calling SEGMeasure failed: ", exc.returncode, exc.output)
+            print(("Calling SEGMeasure failed: ", exc.returncode, exc.output))
             seg_score = 0
 
         else:
 
             seg_score = float(seg_output.split()[2])
 
-        print("SEG score: %f"%seg_score)
+        print(("SEG score: %f"%seg_score))
 
         write_track_file(res_track_graph, os.path.join(res_dir, 'res_track.txt'))
         write_track_file(gt_track_graph, os.path.join(gt_track_dir, 'man_track.txt'))
@@ -143,14 +143,14 @@ def evaluate_segtra(res_tracks, res_track_graph, gt_tracks, gt_track_graph):
 
         except CalledProcessError as exc:
 
-            print("Calling TRAMeasure failed: ", exc.returncode, exc.output)
+            print(("Calling TRAMeasure failed: ", exc.returncode, exc.output))
             tra_score = 0
 
         else:
 
             tra_score = float(tra_output.split()[2])
 
-        print("TRA score: %f"%tra_score)
+        print(("TRA score: %f"%tra_score))
 
     finally:
 

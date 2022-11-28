@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import numpy as np
 import h5py
 from scipy.ndimage.measurements import center_of_mass
@@ -49,7 +49,7 @@ def find_edges_between(ids_prev, ids_next, nodes_prev, nodes_next):
     # print(locations)
 
     # for each id
-    for i, candidates in possible_edges.iteritems():
+    for i, candidates in possible_edges.items():
 
         # continuation
         if len(candidates) == 1:

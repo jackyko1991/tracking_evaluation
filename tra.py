@@ -99,7 +99,7 @@ def get_tra_score(res_tracks, res_track_graph, gt_tracks, gt_track_graph, output
                     elif start < frame:
                         ea += 1
                     else:
-                        print "frame outside of track"
+                        print("frame outside of track")
                         
         # cost to transform res to gt
         else:
@@ -152,19 +152,19 @@ def get_tra_score(res_tracks, res_track_graph, gt_tracks, gt_track_graph, output
                         old_values.append(res_label)
                         new_values.append(new_idx)
                         for child, (child_start, child_stop, child_parent) \
-                                in res_dict.iteritems():
+                                in res_dict.items():
                             if child_parent == res_label:
                                 res_dict[child] = [child_start, child_stop, new_idx]
                         
                         new_idx += 1
                     
                     else:
-                        print "frame outside of track"
+                        print("frame outside of track")
                 
                     # delete outgoing parent links
                     if stop == frame:
                         for child, (child_start, child_stop, child_parent) \
-                                in res_dict.iteritems():
+                                in res_dict.items():
                             if child_parent == res_label:
                                 res_dict[child] = [child_start, child_stop, 0]
             
@@ -238,8 +238,8 @@ def get_tra_score(res_tracks, res_track_graph, gt_tracks, gt_track_graph, output
                     old_values, new_values)
 
     
-    print ns, fn, fp, ed, ea, ec
-    print w_ns * ns, w_fn * fn, w_fp * fp, w_ed * ed, w_ea * ea, w_ec * ec
+    print(ns, fn, fp, ed, ea, ec)
+    print(w_ns * ns, w_fn * fn, w_fp * fp, w_ed * ed, w_ea * ea, w_ec * ec)
  
     tra_score = w_ns * ns + w_fn * fn + w_fp * fp + w_ed * ed + w_ea * ea + w_ec * ec
     

@@ -3,7 +3,7 @@ import numpy as np
 import h5py
 from scipy import ndimage
 from greedy_track import greedy_track
-from skimage.morphology import watershed
+from skimage.segmentation import watershed
 #from skimage.segmentation import random_walker
 
 
@@ -39,7 +39,7 @@ def dist(a, b):
 def remove_small_labels(cells, num_pixel):
     unique, counts = np.unique(cells, return_counts=True)
     small_labels = unique[counts <= num_pixel]
-    print "remove small labels: ", len(small_labels)
+    print("remove small labels: ", len(small_labels))
 
     cells = replace(cells, small_labels, np.zeros((len(small_labels)), dtype=np.uint64))
     return cells.astype(np.uint64)
@@ -47,7 +47,7 @@ def remove_small_labels(cells, num_pixel):
 
 def remove_unconnected_pixels(cells, num_pixel):
 
-    print 'remove unconnected pixels'
+    print('remove unconnected pixels')
     labels = list(np.unique(cells))
     if 0 in labels:
         labels.remove(0)
@@ -70,8 +70,8 @@ def relabel_cells(cells, num_pixel):
     unique_cells = np.zeros_like(cells)
     current_label = 1
     
-    print 'relabel cells with unique id in 2d'
-    print num_pixel
+    print('relabel cells with unique id in 2d')
+    print(num_pixel)
     for z in range(cells.shape[0]):
                 
         labels = list(np.unique(cells[z]))
@@ -90,7 +90,7 @@ def relabel_cells(cells, num_pixel):
 
 def apply_grey_dilation(unique_cells, lineages, iteration=1):
 
-    print 'apply grey dilation (with ', iteration, ' iterations)' 
+    print('apply grey dilation (with ', iteration, ' iterations)') 
     
     for z in range(unique_cells.shape[0]):
         overlap = np.array([unique_cells[z].flatten(), lineages[z].flatten()])
@@ -107,7 +107,7 @@ def apply_grey_dilation(unique_cells, lineages, iteration=1):
 
 def apply_3d_grey_dilation(cells, lineages, iteration=1):
 
-    print 'apply 3d grey dilation'
+    print('apply 3d grey dilation')
 
     overlap = np.array([cells.flatten(), lineages.flatten()])
     labels = np.transpose(np.unique(overlap, axis=1))
@@ -122,7 +122,7 @@ def apply_3d_grey_dilation(cells, lineages, iteration=1):
 
 def apply_watershed(raw, unique_cells, lineages, mask=None):
     
-    print 'apply watershed'
+    print('apply watershed')
 
     overlap = np.array([unique_cells.flatten(), lineages.flatten()])
     labels = np.transpose(np.unique(overlap, axis=1))
@@ -148,7 +148,7 @@ def apply_watershed(raw, unique_cells, lineages, mask=None):
 
 def apply_3d_watershed(raw, cells, lineages, mask=None):
 
-    print 'apply 3d watershed'
+    print('apply 3d watershed')
 
     overlap = np.array([cells.flatten(), lineages.flatten()])
     labels = np.transpose(np.unique(overlap, axis=1))
@@ -171,13 +171,13 @@ def apply_3d_watershed(raw, cells, lineages, mask=None):
 
 
 def create_candidate_graph(unique_cells, cells, lineages):
-    print 'create candidate graph'
+    print('create candidate graph')
     edges = []
     edge_weights = []
     
     for z in range(cells.shape[0]-1):
         
-        print 'frame: ', z 
+        print('frame: ', z) 
         frame_edges = []
         frame_weights = []
 

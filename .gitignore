@@ -13,3 +13,5 @@ spare_seeds_in_all_slices/
 
 
 04_ev_track_graph.py
+
+*.bak
